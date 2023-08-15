@@ -5,5 +5,5 @@ Implemetasi Laravel 10 dengan tamplating adminLTE 3 beserta crud (create read up
 ### Cara Instalasi
 
 1. Ubah `.env.example` menjadi `.env`
-2. Buka terminal ctrl + `ketik perintah 
+2. Buka terminal ctrl + '`' ketik perintah <br>
 `composer install`
