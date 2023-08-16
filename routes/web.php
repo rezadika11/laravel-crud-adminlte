@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->middleware('guest');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,4 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::resource('prodi', ProdiController::class)->middleware('auth');
+Route::resource('mahasiswa', MahasiswaController::class)->middleware('auth');
+
+require __DIR__ . '/auth.php';
