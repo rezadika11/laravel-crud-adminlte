@@ -13,7 +13,7 @@ class ProdiController extends Controller
      */
     public function index()
     {
-        $data = Prodi::all();
+        $data = Prodi::latest()->get();
         return view('prodi.index', compact('data'));
     }
 
@@ -62,7 +62,9 @@ class ProdiController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $prodi = Prodi::where('id', $id)->first();
+
+        return view('prodi.edit', compact('prodi'));
     }
 
     /**
@@ -70,7 +72,23 @@ class ProdiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'kode' => 'required',
+            'nama' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            Prodi::where('id', $id)->update($data);
+            DB::commit();
+            return redirect(route('prodi.index'))->with('sukses', 'Data berhasil diupdate');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            report($e);
+
+            return back()->withInput()->with('gagal', 'Data gagal diupdate');
+        }
     }
 
     /**
@@ -78,6 +96,16 @@ class ProdiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+
+            $data = Prodi::where('id', $id)->delete();
+            DB::commit();
+            return redirect(route('prodi.index'))->with('sukses', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            report($e);
+            return back()->withInput()->with('gagal', 'Data gagal dihapus');
+        }
     }
 }

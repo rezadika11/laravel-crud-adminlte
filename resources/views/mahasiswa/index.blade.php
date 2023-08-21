@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Prodi')
+@section('title', 'Mahasiswa')
 @push('css')
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -12,36 +12,42 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Data Prodi</h3>
+                            <h3 class="card-title">Data Mahasiswa</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <a href="{{ route('prodi.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
+                            <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
                                 Tambah</a>
                             <table id="datatable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Kode</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
                                         <th>Prodi</th>
+                                        <th>Alamat</th>
+                                        <th>No Hp</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $prodi)
+                                    @foreach ($data as $mhs)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $prodi->kode }}</td>
-                                            <td>{{ $prodi->nama }}</td>
+                                            <td>{{ $mhs->nama }}</td>
+                                            <td>{{ $mhs->email }}</td>
+                                            <td>{{ $mhs->prodi->nama }}</td>
+                                            <td>{{ $mhs->alamat }}</td>
+                                            <td>{{ $mhs->no_hp }}</td>
                                             <td>
-                                                <a href="{{ route('prodi.edit', $prodi->id) }}" class="btn btn-success"><i
+                                                <a href="{{ route('mahasiswa.edit', $mhs->id) }}" class="btn btn-success"><i
                                                         class="fas fa-edit"></i>
                                                     Edit</a>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#modalHapusProdi{{ $prodi->id }}"><i
+                                                    data-target="#modalHapusMhs{{ $mhs->id }}"><i
                                                         class="fas fa-trash-alt"></i>
                                                     Hapus</button>
-                                                @include('modal.modal-hapus-prodi')
+                                                @include('modal.modal-hapus-mhs')
                                             </td>
                                         </tr>
                                     @endforeach

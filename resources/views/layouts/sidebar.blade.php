@@ -111,7 +111,15 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-header">EXAMPLES</li>
+            <li class="nav-header">Settings</li>
+            <li class="nav-item">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="nav-link btn btn-danger text-white"><i
+                            class="fas fa-sign-out-alt"></i>
+                        Logout</button>
+                </form>
+            </li>
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
